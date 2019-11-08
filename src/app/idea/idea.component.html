@@ -6,13 +6,4 @@
         <span class="badge">{{idea.id}}</span> {{idea.name}}
     </li>
 </ul>
-
-<div *ngIf="selectedIdea">
-    <h2>详情</h2>
-    <div><span>编号:</span>{{selectedIdea.id}}</div>
-    <div>
-        <label>名称:
-            <input [(ngModel)]="selectedIdea.name" placeholder="名称">
-        </label>
-    </div>
-</div>
+<app-idea-details [idea]="selectedIdea"></app-idea-details>
