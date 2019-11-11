@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Idea } from '../idea';
-import { IDEAS } from '../mock-ideas'
+import { IdeaService } from '../idea.service'
 
 @Component({
   selector: 'app-idea',
@@ -12,14 +12,21 @@ export class IdeaComponent implements OnInit {
   //   id: 1,
   //   name: '买衣服'
   // }
-  ideas = IDEAS;
+  ideas: Idea[];
   selectedIdea: Idea;
-  constructor() { }
+  constructor(
+    // 注入
+    private ideaService: IdeaService
+  ) { }
 
   ngOnInit() {
+    this.getIdea();
   }
   onSelect(idea: Idea): void {
     this.selectedIdea = idea;
   }
 
+  getIdea():void {
+    this.ideas = this.ideaService.getIdeas();
+  }
 }
