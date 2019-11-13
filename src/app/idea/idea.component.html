@@ -1,8 +1,9 @@
 <h2>我的想要清单</h2>
 <ul class="heroes">
     <li *ngFor="let idea of ideas">
-        <a routerLink="/detail/{{idea.id}}"></a>
-        <span class="badge">{{idea.id}}</span> {{idea.name}}
+        <a routerLink="/detail/{{idea.id}}">        
+            <span class="badge">{{idea.id}}</span> {{idea.name}}
+        </a>
     </li>
 </ul>
 <!-- <app-idea-details [idea]="selectedIdea"></app-idea-details> -->

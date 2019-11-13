@@ -24,7 +24,7 @@ export class IdeaComponent implements OnInit {
 
   getIdea():void {
     // 订阅
-    this.ideaService.getIdea()
+    this.ideaService.getIdeas()
     .subscribe(ideas => this.ideas = ideas);
   }
 }

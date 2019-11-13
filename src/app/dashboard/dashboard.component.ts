@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
     this.getIdeas();
   }
   getIdeas():void {
-    this.ideaService.getIdea()
+    this.ideaService.getIdeas()
     .subscribe(ideas => this.ideas = ideas.slice(1, 5));
   }
 

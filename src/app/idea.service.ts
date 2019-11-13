@@ -17,9 +17,15 @@ export class IdeaService {
   /* getIdeas(): Idea[] {
     return IDEAS;
   } */
+  // 返回想法list列表
+  getIdeas(): Observable<Idea[]> {
+    this.messageService.add('服务提示: 查询购物清单');
+    return of(IDEAS);
+  }
+  // 返回想法list列表中的一条
   getIdea(id: number): Observable<Idea> {
     // 在获取到数组时发送一条消息
-    this.messageService.add(`IdeaService: fetched idea id=${id}`);
+    this.messageService.add(`服务提示: 查看了清单编号${id}`);
     return of(IDEAS.find(idea => idea.id === id));
   }
 }
