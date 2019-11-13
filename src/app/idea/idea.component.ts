@@ -13,7 +13,6 @@ export class IdeaComponent implements OnInit {
   //   name: '买衣服'
   // }
   ideas: Idea[];
-  selectedIdea: Idea;
   constructor(
     // 注入
     private ideaService: IdeaService
@@ -21,9 +20,6 @@ export class IdeaComponent implements OnInit {
 
   ngOnInit() {
     this.getIdea();
-  }
-  onSelect(idea: Idea): void {
-    this.selectedIdea = idea;
   }
 
   getIdea():void {

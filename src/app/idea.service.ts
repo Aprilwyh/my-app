@@ -17,9 +17,9 @@ export class IdeaService {
   /* getIdeas(): Idea[] {
     return IDEAS;
   } */
-  getIdea(): Observable<Idea[]> {
+  getIdea(id: number): Observable<Idea> {
     // 在获取到数组时发送一条消息
-    this.messageService.add('IdeaService: fetched ideas');
-    return of(IDEAS);
+    this.messageService.add(`IdeaService: fetched idea id=${id}`);
+    return of(IDEAS.find(idea => idea.id === id));
   }
 }
