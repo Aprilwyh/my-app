@@ -1,9 +1,16 @@
-<h2>我的想要清单</h2>
+<h2>购物车</h2>
+<div>
+    <label>名称：
+        <input #ideaName />
+    </label>
+    <button (click)="add(ideaName.value); ideaName.value=''">加购</button>
+</div>
 <ul class="heroes">
     <li *ngFor="let idea of ideas">
         <a routerLink="/detail/{{idea.id}}">        
             <span class="badge">{{idea.id}}</span> {{idea.name}}
         </a>
     </li>
+    <button class="delete" title="删除该项" (click)="delete(idea)">X</button>
 </ul>
 <!-- <app-idea-details [idea]="selectedIdea"></app-idea-details> -->

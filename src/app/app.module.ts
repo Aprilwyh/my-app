@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule }    from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
+import { IdeaSearchComponent } from './idea-search/idea-search.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { InMemoryDataService }  from './in-memory-data.service';
     IdeaComponent,
     IdeaDetailsComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    IdeaSearchComponent
   ],
   imports: [
     // 该应用所需外部模块的列表

@@ -27,6 +27,10 @@ export class IdeaDetailsComponent implements OnInit {
     this.ideaService.getIdea(id)
     .subscribe(idea => this.idea = idea);
   }
+  save(): void {
+    this.ideaService.updateIdea(this.idea)
+    .subscribe(() => this.goBack);
+  }
   goBack(): void {
     this.location.back();
   }
