@@ -6,6 +6,10 @@ import { MessageService } from './message.service'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { catchError, map, tap } from 'rxjs/operators';
 
+// 在保存时请求中有一个特殊的头，这个头在httpOptions常量中定义
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-type': 'application/json' })
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +30,7 @@ export class IdeaService {
     return this.http.get<Idea[]>(this.ideasUrl)
     .pipe(
       // tap操作符会会查看Observable中的值，使用tap来记录各种操作
-      tap(_ => this.log('fetched ideas')),
+      tap(_ => this.log('查看清单列表')),
       // catchError()操作符会拦截失败的Observable，把错误对象传给错误处理器，错误处理器处理这个错误
       catchError(this.handleError<Idea[]>('getIdea', []))
     )
@@ -48,12 +52,24 @@ export class IdeaService {
   getIdea(id: number): Observable<Idea> {
     const url = `${this.ideasUrl}/${id}`; // 拼接路径
     return this.http.get<Idea>(url).pipe(
-      tap(_ => this.log(`fetched idea id=${id}`)),
+      tap(_ => this.log(`查看清单列表编号为${id}`)),
       catchError(this.handleError<Idea>(`getIdea id=${id}`))
     )
     // 在获取到数组时发送一条消息
     return of(IDEAS.find(idea => idea.id === id));
   }
+  getIdeaNo404<Data>(id: number): Observable<Idea> {
+    const url = `${this.ideasUrl}/?id=${id}`;
+    return this.http.get<Idea[]>(url).pipe(
+        map(ideas => ideas[0]), // returns a {0|1} element array
+        tap(h => {
+          const outcome = h ? `fetched` : `did not find`;
+          this.log(`${outcome} idea id=${id}`);
+        }),
+        catchError(this.handleError<Idea>(`getIdea id=${id}`))
+      );
+  }
+
   // 调用messageService的私有方法
   private log(message: string) {
     this.messageService.add(`查看信息：${message}`)
@@ -61,10 +77,6 @@ export class IdeaService {
   
   // 详情页面修改点击保存
   updateIdea(idea: Idea): Observable<any> {
-    // 在保存时请求中有一个特殊的头，这个头在httpOptions常量中定义
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-type': 'application/json' })
-    }
     // 使用http.put()把修改后的数据保存到服务器上。put接收三个参数：url；要修改的数据；选项httpOption
     return this.http.put(this.ideasUrl, idea, httpOptions).pipe(
       tap(_ => this.log(`保存了清单编号${idea.id}`)),
@@ -74,10 +86,6 @@ export class IdeaService {
 
   // 加购保存
   addIdea(idea: Idea): Observable<Idea> {
-    // 在保存时请求中有一个特殊的头，这个头在httpOptions常量中定义
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-type': 'application/json' })
-    }
     // updateIdea调用HttpClient.put(),而addIdea调用post()
     return this.http.post<Idea>(this.ideasUrl, idea, httpOptions).pipe(
       // 服务器为这个新的name生成一个id，然后把它通过Observable<Idea>返回给调用者
@@ -87,10 +95,6 @@ export class IdeaService {
   }
   
   deleteIdea(idea: Idea | number): Observable<Idea> {
-    // 在保存时请求中有一个特殊的头，这个头在httpOptions常量中定义
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-type': 'application/json' })
-    }
     const id = typeof idea === 'number' ? idea : idea.id;
     // URL就是数据的资源URL + 要删除的数据id
     const url = `${this.ideasUrl}/${id}`;

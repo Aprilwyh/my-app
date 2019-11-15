@@ -1,1 +1,16 @@
-<p>idea-search works!</p>
+<div id="search-component">
+    <!-- for属性规定label与哪个表单元素绑定 -->
+    <h4><label for="search-box">商品查询</label></h4>
+    <!-- 用户在搜索框中输入时，keyup事件绑定会调用该组件的search()方法，并传入新的搜索框的值 -->
+    <input #searchBox id="search-box" (input)="search(searchBox.value)" /> 
+    <ul class="search-result">
+        <!-- $是一个命名惯例，用来表明heroes$是一个Observable，而不是数组 -->
+        <!-- *ngFor不能直接使用Observable。不过后面还有一个管道字符（|）和一个async，它表示Angular的AsyncPipe -->
+        <!-- AsyncPipe 会自动订阅到 Observable，就不用再在组件类中订阅了 -->
+        <li *ngFor="let idea of ideas$ | async">
+            <a routerLink="/detail/{{idea.id}}">
+                {{idea.name}}
+            </a>
+        </li>
+    </ul>
+</div>

@@ -10,7 +10,7 @@
         <a routerLink="/detail/{{idea.id}}">        
             <span class="badge">{{idea.id}}</span> {{idea.name}}
         </a>
+        <button class="delete" title="删除该项" (click)="delete(idea)">X</button>
     </li>
-    <button class="delete" title="删除该项" (click)="delete(idea)">X</button>
 </ul>
 <!-- <app-idea-details [idea]="selectedIdea"></app-idea-details> -->
